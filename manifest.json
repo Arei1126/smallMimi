@@ -1,13 +1,13 @@
 {
-	"name": "pwaTemplate",
-	"description":"The template for pwa" ,
-	"short_name": "pwaTemplate",
+	"name": "SmallMimi",
+	"description":"small mimi",
+	"short_name": "sMimi",
 	"start_url" : "./index.html",
 	"id": "./index.html",
 	"scope": "./",
 	"display": "standalone",
-	"theme_color": "#ffffff",
-	"background_color": "#ffffff",
+	"theme_color": "floralwhite",
+	"background_color": "floralwhite",
 	"orientation": "any",
 	"icons": [
 		{

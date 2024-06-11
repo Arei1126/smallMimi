@@ -1,12 +1,17 @@
-const VERSION = "0";
-const CACHE_NAME = `pwaTest-${VERSION}`;
+const VERSION = "0.1";
+const CACHE_NAME = `sMimi-${VERSION}`;
 
 const APP_STATIC_RESOURCES = [
 	"./manifest.json",
 	"./index.html",
 	"./resources/css/css.css",
 	"./resources/scripts/script.js",
+	"./resources/scripts/module/csv.js",
+	"./resources/scripts/module/idb.js",
 	"./resources/icons/icon.png",
+	"./resources/sound/wall_switch.mp3",
+	"./resources/sound/wall_switch_reverse.mp3",
+
 ];
 
 self.addEventListener("install", (e) => {  // chashの更新はここで。cache_nameが変わるとここのが読み込まれる
