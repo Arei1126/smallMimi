@@ -3,11 +3,11 @@
 	"description":"small mimi",
 	"short_name": "sMimi",
 	"start_url" : "./index.html",
-	"id": "./index.html",
+	"id": "sMimi",
 	"scope": "./",
 	"display": "standalone",
-	"theme_color": "floralwhite",
-	"background_color": "floralwhite",
+	"theme_color": "#fffaf0",
+	"background_color": "#fffaf0",
 	"orientation": "any",
 	"icons": [
 		{
