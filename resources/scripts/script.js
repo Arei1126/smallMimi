@@ -2,12 +2,14 @@
 import * as IDB from "./module/idb.js"
 
 const LANG = "ja";
-const PITCH = 1.0;
-const RATE = 1.0;
-const BRIEFING = "やーやあ、すずいーたかゆきー";
-const DEBRIEFING = "北海道は魔神のものだ";
-const RESPONSE = "腹を割って話そう";
-const RECORDING_DUARATION = 10*1000; // (ms)
+const PITCH = 0.7;
+const RATE = 0.35;
+const BRIEFING0 = "こんにちは。僕は、聞き耳だよ。僕は退屈だから、阪大生の最新の暇つぶしの方法が知りたいなー。気になるから、教えてほしいなあ。";
+const BRIEFING = "僕の耳に向かって、はっきりしゃべりかけてほしいな。どうぞ。";
+const DEBRIEFING0 = "へー、そうなのかい、これで退屈しないかな。なんたって、耳だからね。";
+const DEBRIEFING = "ありがとう。またねー";
+const RESPONSE = "ほう";
+const RECORDING_DUARATION = 30*1000; // (ms)
 
 window.addEventListener("load", async ()=>{
 
@@ -133,6 +135,15 @@ window.addEventListener("load", async ()=>{
 
 		async function brief(){
 			if(Voices.length !== 0){
+				const utter0 = new SpeechSynthesisUtterance();
+				utter0.lang = LANG;
+				utter0.pitch = PITCH;
+				utter0.rate = RATE;
+				utter0.text = BRIEFING0;
+
+				Synth.speak(utter0);
+
+
 				const utter = new SpeechSynthesisUtterance();
 				utter.lang = LANG;
 				utter.pitch = PITCH;
@@ -262,7 +273,15 @@ window.addEventListener("load", async ()=>{
 		async function debrief(){	
 			console.log("debriefing...");
 
-			if(Voices.length !== 0){
+			if(Voices.length !== 0){	
+				const utter0 = new SpeechSynthesisUtterance();
+				utter0.lang = LANG;
+				utter0.pitch = PITCH;
+				utter0.text = DEBRIEFING0;
+				utter0.rate = RATE;
+
+				Synth.speak(utter0);
+				
 				const utter = new SpeechSynthesisUtterance();
 				utter.lang = LANG;
 				utter.pitch = PITCH;
