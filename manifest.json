@@ -3,7 +3,7 @@
 	"description":"small mimi",
 	"short_name": "sMimi",
 	"start_url" : "./index.html",
-	"id": "sMimi",
+	"id": "./index.html",
 	"scope": "./",
 	"display": "standalone",
 	"theme_color": "#fffaf0",
