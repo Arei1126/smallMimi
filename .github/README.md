@@ -1,11 +1,10 @@
-# Speech Recogniton Test
+# Small Mimi
 ## NAME
-Speech Recogniton Test - A test app for speech recogniton API 
+Small Mimi - An unknow object listening your voice
 
 ## DESCRIPTION
 
 ## OPTION
 
 ## Web Demo
-[here](https://arei1126.github.io/SpeechRecognitionTest/)
-
+[here](https://arei1126.github.io/smallMimi/)
