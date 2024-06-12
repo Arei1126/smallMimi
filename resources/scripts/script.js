@@ -12,7 +12,6 @@ const RESPONSE = "ほう";
 const RECORDING_DUARATION = 30*1000; // (ms)
 
 let Situations = [];
-
 let SelectedSituation;
 
 class situation {
