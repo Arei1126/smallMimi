@@ -9,10 +9,20 @@
 		<link type="text/css" rel="stylesheet" href="./resources/css/css.css">
 		<script type="module" src="./resources/scripts/script.js"></script>
 		<dialog id="manager">
+
 			<form method="dialog">
-				<button>close</button>
+				<button id="close">close</button>
 			</form>
-			<div id="downloadList"></div>
+
+			<div>
+				<label for="situationSelect">Chose a situation:</label>
+				<select id="situationSelect">
+				</select>
+
+			</div>
+					<div id="downloadList">
+					<label for="downloadList">Recording List:</label>
+					</div>
 		</dialog>
 
 		<p id="rec" class="notrec">RECORDING</p>
