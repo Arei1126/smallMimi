@@ -3,13 +3,42 @@ import * as IDB from "./module/idb.js"
 
 const LANG = "ja";
 const PITCH = 0.7;
-const RATE = 0.35;
-const BRIEFING0 = "こんにちは。僕は、聞き耳だよ。僕は退屈だから、阪大生の最新の暇つぶしの方法が知りたいなー。気になるから、教えてほしいなあ。";
+const RATE = 0.4;
+
 const BRIEFING = "僕の耳に向かって、はっきりしゃべりかけてほしいな。どうぞ。";
-const DEBRIEFING0 = "へー、そうなのかい、これで退屈しないかな。なんたって、耳だからね。";
 const DEBRIEFING = "ありがとう。またねー";
 const RESPONSE = "ほう";
+
 const RECORDING_DUARATION = 30*1000; // (ms)
+
+let Situations = [];
+
+let SelectedSituation;
+
+class situation {
+	constructor(name,brief, res, debrief){
+		this.name = name;
+		this.briefing = brief;
+		this.response = res;
+		this.debriefing = debrief;
+		this.option = null;
+	}
+}
+
+let stDefault = new situation("デフォルト","人間の声が聞こえるぞ。そうだ、そこの人間に質問だ。お前の夢は何だ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+Situations.push(stDefault);
+let stSaka = new situation("阪大坂","人間の声が聞こえるぞ。そうだ、阪大坂にいる人間に質問だ。お前はこれから何をする予定なんだ？耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+Situations.push(stSaka);
+let stLafore = new situation("ラフォレ","人間の声が聞こえるぞ。そうだ、ラフォレに向かう人間に質問だ。お前は今日はどんなものを食べるんだ？耳に向かって話かけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう。人間、またね。");
+Situations.push(stLafore);
+let stLibrary = new situation("図書館","人間の声が聞こえるぞ。そうだ、図書館に来た人間に質問だ。お前は今日は、何をしに図書館に来たんだ？耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+Situations.push(stLibrary);
+let stNamiko = new situation("浪高庭園","人間の声が聞こえるぞ。そうだ、そこにいる人間に質問だ。お前は、暇なとき何をしているんだ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+Situations.push(stNamiko);
+let stMain = new situation("メインストリート","人間の声が聞こえるぞ。そうだ、そこにいる人間に質問だ。お前は、暇なとき何をしているんだ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+Situations.push(stMain);
+let stShop = new situation("浪高庭園","人間の声が聞こえるぞ。そうだ、そこにいる人間に質問だ。この商店街のおすすめの店を教えてほしい。耳に向かって話しかけてくれ。さん、にい、いち、どうぞ。","うん","ありがとう、人間。またね。");
+Situations.push(stShop);
 
 window.addEventListener("load", async ()=>{
 
@@ -19,6 +48,11 @@ window.addEventListener("load", async ()=>{
 
 	const manager = document.querySelector("#manager");
 	const downloadList = document.querySelector("#downloadList");
+	const situationSelect = document.querySelector("#situationSelect");
+	const close = document.querySelector("#close");
+
+
+	
 
 	window.addEventListener("click", await init);
 
@@ -26,6 +60,21 @@ window.addEventListener("load", async ()=>{
 		window.removeEventListener("click", init);
 		guide.style.display = "none";
 
+		for(const st of Situations){
+			const option = document.createElement("option");
+			option.value = st.name;
+			option.innerText = st.name;
+			st.option = option;
+			situationSelect.appendChild(option); 
+		}
+		close.addEventListener("click", ()=>{
+			for(const st of Situations){
+				if(st.option.selected){
+					SelectedSituation = st;
+				}
+			}
+			return;
+		});
 		manager.showModal();
 		IDB.downloadAllCSV(downloadList);
 
@@ -135,19 +184,10 @@ window.addEventListener("load", async ()=>{
 
 		async function brief(){
 			if(Voices.length !== 0){
-				const utter0 = new SpeechSynthesisUtterance();
-				utter0.lang = LANG;
-				utter0.pitch = PITCH;
-				utter0.rate = RATE;
-				utter0.text = BRIEFING0;
-
-				Synth.speak(utter0);
-
-
 				const utter = new SpeechSynthesisUtterance();
 				utter.lang = LANG;
 				utter.pitch = PITCH;
-				utter.text = BRIEFING;
+				utter.text = SelectedSituation.briefing;
 				utter.rate = RATE;
 				
 				utter.addEventListener("end",()=>{
@@ -161,7 +201,7 @@ window.addEventListener("load", async ()=>{
 
 			}
 			else{
-				console.warn("ブリーフィング");
+				console.warn(SelectedSituation.briefing);
 				const ev = new CustomEvent("briefingFinished",{
 					detail: {}
 				});
@@ -217,7 +257,7 @@ window.addEventListener("load", async ()=>{
 						const utter = new SpeechSynthesisUtterance();
 						utter.lang = LANG;
 						utter.pitch = PITCH;
-						utter.text = RESPONSE;
+						utter.text = SelectedSituation.response;
 						utter.rate = RATE;
 
 						utter.addEventListener("end",()=>{});
@@ -226,7 +266,7 @@ window.addEventListener("load", async ()=>{
 
 					}
 					else{
-						console.warn("相槌");
+						console.warn(SelectedSituation.response);
 					}
 				}
 			}
@@ -239,7 +279,7 @@ window.addEventListener("load", async ()=>{
 				if(Recording){
 					// 誰も発声しなかったときの対策
 					const now = new Date();
-					if(now - StartTimeMs > 3*RECORDING_DUARATION){
+					if(now - StartTimeMs > 1.5*RECORDING_DUARATION){
 						Recording = false;
 
 						// save data
@@ -274,18 +314,10 @@ window.addEventListener("load", async ()=>{
 			console.log("debriefing...");
 
 			if(Voices.length !== 0){	
-				const utter0 = new SpeechSynthesisUtterance();
-				utter0.lang = LANG;
-				utter0.pitch = PITCH;
-				utter0.text = DEBRIEFING0;
-				utter0.rate = RATE;
-
-				Synth.speak(utter0);
-				
 				const utter = new SpeechSynthesisUtterance();
 				utter.lang = LANG;
 				utter.pitch = PITCH;
-				utter.text = DEBRIEFING;
+				utter.text = SelectedSituation.debriefing;
 				utter.rate = RATE;
 				
 				utter.addEventListener("end",()=>{
@@ -299,7 +331,7 @@ window.addEventListener("load", async ()=>{
 
 			}
 			else{
-				console.warn("デブリーフィング");	
+				console.warn(SelectedSituation.debriefing);	
 				const ev = new CustomEvent("debriefingFinished",{
 					detail: {}
 				});
