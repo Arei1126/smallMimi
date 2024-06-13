@@ -1,4 +1,4 @@
-const VERSION = "0.31";
+const VERSION = "0.32";
 const CACHE_NAME = `sMimi-${VERSION}`;
 
 const APP_STATIC_RESOURCES = [

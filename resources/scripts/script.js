@@ -1,6 +1,8 @@
 `use strict`
 import * as IDB from "./module/idb.js"
 
+const VERSION = "0.32";
+
 const LANG = "ja";
 const PITCH = 0.7;
 const RATE = 0.4;
@@ -9,7 +11,7 @@ const BRIEFING = "僕の耳に向かって、はっきりしゃべりかけて�
 const DEBRIEFING = "ありがとう。またねー";
 const RESPONSE = "ほう";
 
-const RECORDING_DUARATION = 30*1000; // (ms)
+const RECORDING_DUARATION = 20*1000; // (ms)
 
 let Situations = [];
 let SelectedSituation;
@@ -42,7 +44,7 @@ Situations.push(stShop);
 window.addEventListener("load", async ()=>{
 
 	const guide = document.createElement("p");
-	guide.innerText = "Tap or Click here to Start"
+	guide.innerText = `Ver. ${VERSION} Tap or Click here to Start`
 	document.body.appendChild(guide);
 
 	const manager = document.querySelector("#manager");
