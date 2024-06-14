@@ -1,7 +1,7 @@
 `use strict`
 import * as IDB from "./module/idb.js"
 
-const VERSION = "0.32";
+const VERSION = "0.33";
 
 const LANG = "ja";
 const PITCH = 0.7;
@@ -11,7 +11,7 @@ const BRIEFING = "僕の耳に向かって、はっきりしゃべりかけて�
 const DEBRIEFING = "ありがとう。またねー";
 const RESPONSE = "ほう";
 
-const RECORDING_DUARATION = 20*1000; // (ms)
+const RECORDING_DUARATION = 10*1000; // (ms)
 
 let Situations = [];
 let SelectedSituation;
