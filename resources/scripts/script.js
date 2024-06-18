@@ -1,11 +1,11 @@
 `use strict`
 import * as IDB from "./module/idb.js"
 
-const VERSION = "0.35";
+const VERSION = "0.36";
 
 const LANG = "ja";
 const PITCH = 0.7;
-const RATE = 0.4;
+const RATE = 0.5;
 
 const BRIEFING = "僕の耳に向かって、はっきりしゃべりかけてほしいな。どうぞ。";
 const DEBRIEFING = "ありがとう。またねー";
@@ -28,13 +28,21 @@ class situation {
 
 let stDefault = new situation("デフォルト","人間の声が聞こえるぞ。そうだ、そこの人間に質問だ。お前の夢は何だ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
 Situations.push(stDefault);
-let stSaka = new situation("阪大坂","人間の声が聞こえるぞ。そうだ、阪大坂にいる人間に質問だ。お前はこれから何をする予定なんだ？耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+
+let stSaka = new situation("阪大坂","人間の声が聞こえるぞ。質問だ。お前はこれから何をする予定だ？耳に向かって話しかけてくれ。さん、にい、いち、どうぞ。","うん","ありがとう、人間。またね。");
 Situations.push(stSaka);
-let stLafore = new situation("ラフォレ","人間の声が聞こえるぞ。そうだ、ラフォレに向かう人間に質問だ。お前は今日はどんなものを食べるんだ？耳に向かって話かけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう。人間、またね。");
+
+let stLafore = new situation("ラフォレ","人間の声が聞こえるぞ。質問だ。お前は今日はどんなものを食べるんだ？耳に向かって話かけてくれ。さん、にい、いち、どうぞ。","うん","ありがとう。人間、またね。");
 Situations.push(stLafore);
-let stLibrary = new situation("図書館","人間の声が聞こえるぞ。そうだ、図書館に来た人間に質問だ。お前は今日は、何をしに図書館に来たんだ？耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+
+let stLaforeAfter = new situation("ラフォレ食後","人間の声が聞こえるぞ。質問だ。お前は今日は何を食べたのだ？耳に向かって話かけてくれ。さん、にい、いち、どうぞ。","うん","ありがとう。人間、またね。");
+Situations.push(stLaforeAfter);
+
+
+let stLibrary = new situation("図書館","人間の声が聞こえるぞ。質問だ。お前は今日は何をしに図書館に来たんだ？耳に向かって話しかけてくれ。さん、にい、いち、どうぞ。","うん","ありがとう、人間。またね。");
 Situations.push(stLibrary);
 let stNamiko = new situation("浪高庭園","人間の声が聞こえるぞ。そうだ、そこにいる人間に質問だ。お前は、暇なとき何をしているんだ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
+
 Situations.push(stNamiko);
 let stMain = new situation("メインストリート","人間の声が聞こえるぞ。そうだ、そこにいる人間に質問だ。お前は、暇なとき何をしているんだ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん","ありがとう、人間。またね。");
 Situations.push(stMain);
