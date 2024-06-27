@@ -1,4 +1,59 @@
+fieldset{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: flex-end;
+}
+
+#PUSH{
+	font-family: kikai;
+	font-weight: bold;
+	}
+
+#rec{
+	font-family: kikai;
+	font-weight: bold;
+}
+
+@font-face{
+	font-family: "kikai";
+	src: url("./KikaiChokokuJIS-Md.otf");
+}
+	
+@font-face{
+ 		font-family: "seg7";
+		/*font-family: sans-serif;*/
+  		src: url("./DSEG7ClassicMini-Italic.woff2");
+
+}
+
+@font-face{
+	font-family: "seg14";
+	src: url("DSEG14ClassicMini-Italic.woff2");
+}
+
+.kikai{
+	font-family: "kikai";
+}
+
 @media (orientation: landscape){
+
+
+	#segDisplay{
+		font-family: "seg7";
+		font-size: 3em;
+		color:	#FF0000;
+		background-color: black;
+		padding: 1.5%;
+	}
+
+	.col{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1em;
+	}
+
 
 	body{
 		height: 100vh;
@@ -72,11 +127,10 @@
 
 	#rec{
 		font-size: 2em;
-		font-family: sans-serif;
 		color: white;
 		opacity: 0;
 		padding: 1% 4%;
-		margin-left: 5%;
+		margin-bottom: 0%;
 	}
 
 	.notrec{
@@ -97,6 +151,21 @@
 }
 
 @media (orientation: portrait){
+
+	#segDisplay{
+		font-family: "seg7";
+		font-size: 3em;
+		color:	#FF0000;
+		background-color: black;
+		padding: 1.5%;
+	}
+
+	.col{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1em;
+	}
 
 	body{
 		height: 100vh;
@@ -172,11 +241,13 @@
 
 	#rec{
 		font-size: 2em;
-		font-family: sans-serif;
 		color: white;
 		opacity: 0;
 		padding: 1% 4%;
 		margin-top: -30%;
+		margin-bottom: 5%;
+		margin-left: 3%;
+		margin-right: 3%;
 	}
 
 	.notrec{

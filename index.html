@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html> 
+	<meta charset="UTF-8">
 	<head>
 		<link rel="manifest" href="./manifest.json" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +26,15 @@
 					</div>
 		</dialog>
 
-		<div id="rec" class="notrec">RECORDING</div>
-		
+		<div class="col">
+			<div id="rec" class="notrec">RECORDING</div>
+			<fieldset>
+				<legend class="kikai">のこり</legend>
+				<div id="segDisplay">88</div>
+				<span class="kikai">秒</span>
+			</fieldset>
+		</div>
+
 		<button id="startButton" class="styled-button">
 			<div class="inner-circle"></div>
 			<p id="PUSH">PUSH</p>

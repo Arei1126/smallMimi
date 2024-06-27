@@ -1,17 +1,24 @@
 `use strict`
 import * as IDB from "./module/idb.js"
 
-const VERSION = "0.41";
+const VERSION = "0.5";
 
 const LANG = "ja";
 const PITCH = 0.7;
 const RATE = 0.5;
+const RATE_MUTE = 10;
+
+const VOLUME_MUTE = 0;
+const VOLUME = 1;
+
+const TIMEOUT_RATE = 1.2;
 
 const BRIEFING = "僕の耳に向かって、はっきりしゃべりかけてほしいな。どうぞ。";
 const DEBRIEFING = "ありがとう。またねー";
 const RESPONSE = "ほう";
 
-const RECORDING_DUARATION = 10*1000; // (ms)
+const RECORDING_DUARATION_SEC = 10
+const RECORDING_DUARATION = RECORDING_DUARATION_SEC*1000; // (ms)
 
 let Situations = [];
 let SelectedSituation;
@@ -26,8 +33,17 @@ class situation {
 	}
 }
 
-let stDefault = new situation("デフォルト","人間の声が聞こえるぞ。そうだ、そこの人間に質問だ。お前の夢は何だ。耳に向かって話しかけてくれ。さーん、にーい、いーち、どうぞ。","うん、それで","ありがとう、人間。またね。");
+let stDefault = new situation("デフォルト","質問。あなたの夢は何だ。どうぞ。","うん、それで","ありがとう、またね。");
 Situations.push(stDefault);
+
+let stMute = new situation("無言","あ","あ","あ");
+Situations.push(stMute);
+
+
+
+let stDefault1 = new situation("デフォルト1","質問。今日の予定は。どうぞ。","うん、それで","ありがとう。またね。");
+Situations.push(stDefault1);
+
 
 let stSaka = new situation("阪大坂","人間の声が聞こえるぞ。質問だ。お前はこれから何をする予定だ？耳に向かって話しかけてくれ。さん、にい、いち、どうぞ。","うん、それで","ありがとう、人間。またね。");
 Situations.push(stSaka);
@@ -64,6 +80,8 @@ window.addEventListener("load", async ()=>{
 	const situationSelect = document.querySelector("#situationSelect");
 	const close = document.querySelector("#close");
 
+	const seg  = document.querySelector("#segDisplay");
+
 
 	
 
@@ -72,6 +90,8 @@ window.addEventListener("load", async ()=>{
 	async function init() { 
 		window.removeEventListener("click", init);
 		guide.style.display = "none";
+
+		seg.innerText =  String(RECORDING_DUARATION_SEC).padStart(2,"0");
 
 		for(const st of Situations){
 			const option = document.createElement("option");
@@ -177,7 +197,7 @@ window.addEventListener("load", async ()=>{
 		};
 
 		Signal.addEventListener("debriefingFinished", ()=>{
-		//	startButton.style.display = "block";
+			seg.innerText =  String(RECORDING_DUARATION_SEC).padStart(2,"0");
 			startButton.addEventListener("pointerup", start);
 		});
 
@@ -202,6 +222,14 @@ window.addEventListener("load", async ()=>{
 				utter.pitch = PITCH;
 				utter.text = SelectedSituation.briefing;
 				utter.rate = RATE;
+				if(SelectedSituation == stMute){
+					utter.volume = VOLUME_MUTE;
+					utter.rate = RATE_MUTE;
+				}
+				else{
+					utter.volume = VOLUME;
+				}
+
 				
 				utter.addEventListener("end",()=>{
 					const ev = new CustomEvent("briefingFinished",{
@@ -223,6 +251,22 @@ window.addEventListener("load", async ()=>{
 		}
 
 		async function record() {
+			let refTime = document.timeline.currentTime;
+
+			window.requestAnimationFrame(countDown);
+			
+			function countDown(t){
+				if((t - refTime) >= 1000 ){
+					seg.innerText = String(Number(seg.innerText) - 1).padStart(2,"0");
+					refTime = t;
+					if(seg.innerText == 0){
+						window.cancelAnimationFrame(countDown);
+						return;
+					}
+				}
+				window.requestAnimationFrame(countDown);
+			}
+
 			rec.className = "blinking-text";
 
 			let Recording = true;
@@ -271,7 +315,14 @@ window.addEventListener("load", async ()=>{
 						utter.lang = LANG;
 						utter.pitch = PITCH;
 						utter.text = SelectedSituation.response;
-						utter.rate = RATE;
+						utter.rate = RATE;	
+						if(SelectedSituation == stMute){
+							utter.volume = VOLUME_MUTE;
+							utter.rate = RATE_MUTE;
+						}
+						else{
+							utter.volume = VOLUME;
+						}
 
 						utter.addEventListener("end",()=>{});
 
@@ -292,7 +343,7 @@ window.addEventListener("load", async ()=>{
 				if(Recording){
 					// 誰も発声しなかったときの対策
 					const now = new Date();
-					if(now - StartTimeMs > 1.5*RECORDING_DUARATION){
+					if(now - StartTimeMs > TIMEOUT_RATE*RECORDING_DUARATION){
 						Recording = false;
 
 						// save data
@@ -332,7 +383,14 @@ window.addEventListener("load", async ()=>{
 				utter.pitch = PITCH;
 				utter.text = SelectedSituation.debriefing;
 				utter.rate = RATE;
-				
+				if(SelectedSituation == stMute){
+					utter.volume = VOLUME_MUTE;
+					utter.rate = RATE_MUTE;
+				}
+				else{
+					utter.volume = VOLUME;
+				}
+
 				utter.addEventListener("end",()=>{
 					const ev = new CustomEvent("debriefingFinished",{
 						detail: {}
